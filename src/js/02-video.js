@@ -7,12 +7,15 @@ const player = new Player('vimeo-player', {
 });
 
 player.on('timeupdate', throttle(saveTimeInLocalStorage, 1000));
-let saveTime;
+
 function saveTimeInLocalStorage(data) {
   localStorage.setItem('videoplayer-current-time', JSON.stringify(data.seconds));
 }
+const saveTime = JSON.parse(localStorage.getItem('videoplayer-current-time'));
 function getSaveTime() {
-  if (!saveTime) saveTime = JSON.parse(localStorage.getItem('videoplayer-current-time'));
+  if (saveTime) {
+    player.setCurrentTime(saveTime);
+  } else player.setCurrentTime(0);
 }
 getSaveTime();
-player.setCurrentTime(saveTime);
+// player.play();

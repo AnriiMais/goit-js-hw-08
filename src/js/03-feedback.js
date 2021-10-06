@@ -11,7 +11,12 @@ refs.feedbackForm.addEventListener('input', throttle(onFormInput, 500));
 // refs.message.addEventListener('input', onInputMessage);
 
 const saveInputForm = {};
-
+if (localStorage.getItem('feedback-form-state')) {
+  const saveDefaultForm = JSON.parse(localStorage.getItem('feedback-form-state'));
+  console.log('SaveDefaultForm', saveDefaultForm);
+  refs.email.value = saveDefaultForm.email;
+  refs.message.value = saveDefaultForm.message;
+}
 function onFormSubmit(e) {
   e.preventDefault();
   e.currentTarget.reset();
