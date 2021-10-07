@@ -1,5 +1,5 @@
 import throttle from 'lodash.throttle';
-
+console.log("document.querySelector('.feedback-form')", document.querySelector('.feedback-form'));
 const refs = {
   feedbackForm: document.querySelector('.feedback-form'),
   email: document.querySelector('input[type="email"]'),
@@ -7,10 +7,6 @@ const refs = {
 };
 refs.feedbackForm.addEventListener('submit', onFormSubmit);
 refs.feedbackForm.addEventListener('input', throttle(onFormInput, 500));
-// refs.email.addEventListener('input', onInputEmail);
-// refs.message.addEventListener('input', onInputMessage);
-
-const saveInputForm = {};
 if (localStorage.getItem('feedback-form-state')) {
   const saveDefaultForm = JSON.parse(localStorage.getItem('feedback-form-state'));
   console.log('SaveDefaultForm', saveDefaultForm);
@@ -25,28 +21,11 @@ function onFormSubmit(e) {
   e.preventDefault();
   e.currentTarget.reset();
   localStorage.removeItem('feedback-form-state');
-  console.log('saveInputForm', saveInputForm);
 }
 function onFormInput(e) {
-  saveInputForm[e.target.name] = e.target.value;
-  // if (refs.message.name === e.target.name) {
-  //   refs.message.value = e.target.value;
-  // }
-
-  localStorage.setItem('feedback-form-state', JSON.stringify(saveInputForm));
+  const obj = {
+    message: refs.feedbackForm.elements.message.value,
+    email: refs.feedbackForm.elements.email.value,
+  };
+  localStorage.setItem('feedback-form-state', JSON.stringify(obj));
 }
-
-// function onInputEmail(e) {
-//   const emailIn = e.target.value;
-
-//   saveInputForm[e.target.name] = emailIn;
-//   console.log(emailIn);
-// }
-// function onInputMessage(e) {
-//   const messageIn = e.target.value;
-//   saveInputForm[e.target.name] = messageIn;
-//   console.log('messageIn', messageIn);
-
-//   //   const message = e.target.value;
-// }
-// console.log('storageSave', storageSave);
