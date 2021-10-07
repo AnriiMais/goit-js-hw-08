@@ -14,8 +14,12 @@ const saveInputForm = {};
 if (localStorage.getItem('feedback-form-state')) {
   const saveDefaultForm = JSON.parse(localStorage.getItem('feedback-form-state'));
   console.log('SaveDefaultForm', saveDefaultForm);
-  refs.email.value = saveDefaultForm.email;
-  refs.message.value = saveDefaultForm.message;
+  if (saveDefaultForm.email) {
+    refs.email.value = saveDefaultForm.email;
+  }
+  if (saveDefaultForm.message) {
+    refs.message.value = saveDefaultForm.message;
+  }
 }
 function onFormSubmit(e) {
   e.preventDefault();
@@ -25,6 +29,10 @@ function onFormSubmit(e) {
 }
 function onFormInput(e) {
   saveInputForm[e.target.name] = e.target.value;
+  // if (refs.message.name === e.target.name) {
+  //   refs.message.value = e.target.value;
+  // }
+
   localStorage.setItem('feedback-form-state', JSON.stringify(saveInputForm));
 }
 
